@@ -1,4 +1,5 @@
-import dns from 'node:dns';
+import dns from "dns";
+import {app} from "./app.js";
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
 //require('dotenv').config({path: './env'})
@@ -17,7 +18,7 @@ dotenv.config({
 connectDB()
 .then(()=>{
   app.listen(process.env.PORT|| 8000 ,() =>{
-    console.log(`Server is running at port :${process.env.PORT
+    console.log(`Server is running at port :${process.env.PORT || 8000
     }`)
   })
 })
