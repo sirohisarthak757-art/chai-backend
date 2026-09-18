@@ -15,9 +15,11 @@ if(!localFilePath) return null
     resource_type: "auto"
   })
   // So file has uploaded successfully
-  console.log("file is uploaded on cloudinary" , response.url);
-  return response;
+//  console.log("file is uploaded on cloudinary" , response.url);
+fs.unlinkSync(localFilePath) 
+return response;
     }catch(error){
+      console.log("Cloudinary upload error:", error) 
     fs.unlinkSync(localFilePath)  // it just remove the file that was on your local server after uploaded on main server
     return null
     }
