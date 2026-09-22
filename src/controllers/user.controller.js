@@ -94,6 +94,7 @@ return res.status(201).json(
     new ApiResponse(200,  createdUser, "User registered successfully")
 )
 })
+
 const loginUser = asyncHandler(async(req,res) =>{
 // req body se -> data
 // username or email
@@ -103,6 +104,8 @@ const loginUser = asyncHandler(async(req,res) =>{
 // send token (cookie)
 
 const {email, username ,password} = req.body
+console.log("Connected DB:", mongoose.connection.name);
+console.log("Total users in this DB:", await User.countDocuments());
 console.log(email);
 
 if(!username && !email){
@@ -150,8 +153,8 @@ const logoutUser = asyncHandler(async(req,res) =>{
   User.findByIdAndUpdate(
       req.user._id,
       {
-       $set: {
-        refreshToken: undefined
+       $unset: {
+        refreshToken: 1 //this remove the field from the document
        }
       },
       {
@@ -424,6 +427,7 @@ const getWatchHistory = asyncHandler(async(req , res)=>{
             }
         },
         {
+        
             $addFields: {
                 owner: {
                     $first: "$owner"
